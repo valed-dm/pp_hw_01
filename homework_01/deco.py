@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 """Recall python decorators"""
+from functools import wraps
 
 DISABLE = False
 
@@ -14,12 +15,17 @@ def disable(func):
     return func
 
 
-def decorator():
+def decorator(func):
     """
     Decorate a decorator so that it inherits the docstrings
     and stuff from the function it's decorating.
     """
-    return
+
+    @wraps(func)
+    def wrapper(*args, **kwargs):
+        return func(*args, **kwargs)
+
+    return wrapper
 
 
 def count_calls():

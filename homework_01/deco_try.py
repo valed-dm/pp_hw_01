@@ -1,6 +1,7 @@
 """Decorator testing fulfilled here"""
+from functools import wraps
 
-DISABLE = True
+DISABLE = False
 
 
 def disable(func):
@@ -14,6 +15,8 @@ def disable(func):
 
 def do_twice(func):
     """Decorator calls func twice"""
+
+    @wraps(func)
     def wrapper_do_twice(*args, **kwargs):
         func(*args, **kwargs)
         return func(*args, **kwargs)
@@ -34,6 +37,7 @@ def say_hi():
 def main():
     """Executes all functions"""
     say_hi()
+    print(say_hi.__doc__, say_hi.__name__)
 
 
 if __name__ == '__main__':
