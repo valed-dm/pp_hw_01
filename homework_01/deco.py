@@ -2,16 +2,16 @@
 # -*- coding: utf-8 -*-
 """Recall python decorators"""
 
+DISABLE = False
 
-def disable():
+
+def disable(func):
     """
     Disable a decorator by re-assigning the decorator's name
     to this function. For example, to turn off memoization:
-
-    >>> memo = disable
-
+    # >>> memo = disable
     """
-    return
+    return func
 
 
 def decorator():
@@ -64,6 +64,14 @@ def trace():
 
     """
     return
+
+
+if DISABLE:
+    decorator = disable
+    count_calls = disable
+    memo = disable
+    n_ary = disable
+    trace = disable
 
 
 @memo
