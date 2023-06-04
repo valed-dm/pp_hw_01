@@ -1,3 +1,5 @@
+"""Decorator testing fulfilled here"""
+
 DISABLE = True
 
 
@@ -11,6 +13,7 @@ def disable(func):
 
 
 def do_twice(func):
+    """Decorator calls func twice"""
     def wrapper_do_twice(*args, **kwargs):
         func(*args, **kwargs)
         return func(*args, **kwargs)
@@ -24,6 +27,7 @@ if DISABLE:
 
 @do_twice
 def say_hi():
+    """Prints Hi!"""
     print("Hi!")
 
 
