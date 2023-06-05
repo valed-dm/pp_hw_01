@@ -1,2 +1,6 @@
+[MASTER]
+disable=
+    C0103, # Variable name "i" doesn't conform to snake_case naming style (invalid-name)
+
 [BASIC]
 good-names=a, b, n

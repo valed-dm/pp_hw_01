@@ -28,9 +28,16 @@ def decorator(func):
     return wrapper
 
 
-def count_calls():
+def count_calls(func):
     """Decorator that counts calls made to the function decorated."""
-    return
+
+    @wraps(func)
+    def wrapper(*args, **kwargs):
+        wrapper.calls += 1
+        return func(*args, **kwargs)
+
+    wrapper.calls = 0
+    return wrapper
 
 
 def memo():
