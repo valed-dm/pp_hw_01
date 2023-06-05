@@ -40,12 +40,19 @@ def count_calls(func):
     return wrapper
 
 
-def memo():
+def memo(func):
     """
     Memoize a function so that it caches all return values for
     faster future lookups.
     """
-    return
+    cache = {}
+
+    def helper(*args):
+        if args not in cache:
+            cache[args] = func(*args)
+        return cache[args]
+
+    return helper
 
 
 def n_ary():
@@ -91,7 +98,7 @@ if DISABLE:
 @count_calls
 @n_ary
 def addition(a, b):
-    """Sum"""
+    """Sum doc"""
     return a + b
 
 
@@ -99,7 +106,7 @@ def addition(a, b):
 @memo
 @n_ary
 def multiplication(a, b):
-    """Multiply"""
+    """Multiply doc"""
     return a * b
 
 
@@ -107,7 +114,7 @@ def multiplication(a, b):
 # @trace("####")
 @memo
 def fibonacci(n):
-    """Some doc"""
+    """Fibonacci doc"""
     return 1 if n <= 1 else fibonacci(n - 1) + fibonacci(n - 2)
 
 

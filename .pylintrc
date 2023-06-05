@@ -1,6 +1,8 @@
 [MASTER]
 disable=
     C0103, # Variable name "i" doesn't conform to snake_case naming style (invalid-name)
+    R0801, # Similar lines in 2 files
+    R0903, # Too few public methods (1/2) (too-few-public-methods)
 
 [BASIC]
 good-names=a, b, n
