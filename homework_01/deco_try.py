@@ -1,6 +1,6 @@
 """Decorator testing fulfilled here"""
 import tracemalloc
-from functools import wraps
+from functools import wraps, reduce
 from time import perf_counter
 
 DISABLE = False
@@ -99,6 +99,21 @@ class Memoize:
         return self.memo[args]
 
 
+def n_ary(func):
+    """
+    Given binary function f(x, y), return an n_ary function such
+    that f(x, y, z) = f(x, f(y,z)), etc. Also allow f(x) = x.
+    i.e. = functools.reduce
+    """
+
+    @wraps(func)
+    def wrapper_reduce(*args):
+        res = reduce(func, [*args])
+        return res
+
+    return wrapper_reduce
+
+
 def do_thrice(func):
     """Decorator calls func thrice."""
 
@@ -145,6 +160,13 @@ def facto(num):
     return num * facto(num - 1)
 
 
+@count_calls
+@n_ary
+def multiplication(a, b):
+    """Multiply doc"""
+    return a * b
+
+
 def main():
     """Executes all functions"""
     print("-" * 80)
@@ -162,6 +184,9 @@ def main():
     print("-" * 80)
     print(facto(5))
     print(facto.calls)
+    print("-" * 80)
+    print(multiplication(1, 2, 3, 4, 5))
+    print(multiplication.calls)
     print("-" * 80)
 
 

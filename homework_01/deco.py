@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 """Recall python decorators"""
-from functools import wraps
+from functools import wraps, reduce
 
 DISABLE = False
 
@@ -55,12 +55,18 @@ def memo(func):
     return helper
 
 
-def n_ary():
+def n_ary(func):
     """
     Given binary function f(x, y), return an n_ary function such
     that f(x, y, z) = f(x, f(y,z)), etc. Also allow f(x) = x.
+    i.e. = functools.reduce
     """
-    return
+
+    @wraps(func)
+    def wrapper_reduce(*args):
+        return reduce(func, [*args])
+
+    return wrapper_reduce
 
 
 def trace():
@@ -94,8 +100,8 @@ if DISABLE:
     trace = disable
 
 
-@memo
 @count_calls
+@memo
 @n_ary
 def addition(a, b):
     """Sum doc"""
@@ -121,18 +127,22 @@ def fibonacci(n):
 def main():
     """Executes all functions"""
     print(addition(4, 3))
-    # print(addition(4, 3, 2))
+    print(addition(4, 3, 2))
     print(addition(4, 3))
-    print("foo was called", addition.calls, "times")
+    print(addition(2, 3, 4, 5, 6, 7, 8, 9, 10))
+    print(addition.__doc__)
+    print("addition was called", addition.calls, "times")
 
     print(multiplication(4, 3))
-    # print(multiplication(4, 3, 2))
-    # print(multiplication(4, 3, 2, 1))
-    print("bar was called", multiplication.calls, "times")
+    print(multiplication(4, 3, 2))
+    print(multiplication(4, 3, 2, 1))
+    print(multiplication.__doc__)
+    print("multiplication was called", multiplication.calls, "times")
 
+    print("fibonacci(5) =", fibonacci(5))
+    print("fibonacci(10) =", fibonacci(10))
     print(fibonacci.__doc__)
-    fibonacci(3)
-    print(fibonacci.calls, 'calls made')
+    print(fibonacci.calls, 'fibonacci calls made')
 
 
 if __name__ == '__main__':
