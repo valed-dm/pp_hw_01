@@ -47,12 +47,27 @@ def memo(func):
     """
     cache = {}
 
+    @wraps(func)
     def helper(*args):
         if args not in cache:
             cache[args] = func(*args)
         return cache[args]
 
     return helper
+
+
+def memo_kwargs(func):
+    """Keep a cache of previous function calls"""
+
+    @wraps(func)
+    def wrapper_cache(*args, **kwargs):
+        cache_key = args + tuple(kwargs.items())
+        if cache_key not in wrapper_cache.cache:
+            wrapper_cache.cache[cache_key] = func(*args, **kwargs)
+        return wrapper_cache.cache[cache_key]
+
+    wrapper_cache.cache = {}
+    return wrapper_cache
 
 
 def n_ary(func):
@@ -101,18 +116,18 @@ if DISABLE:
 
 
 @count_calls
-@memo
+@memo_kwargs
 @n_ary
 def addition(a, b):
-    """Sum doc"""
+    """Sum docstring"""
     return a + b
 
 
 @count_calls
-@memo
+@memo_kwargs
 @n_ary
 def multiplication(a, b):
-    """Multiply doc"""
+    """Multiply docstring"""
     return a * b
 
 
@@ -120,7 +135,7 @@ def multiplication(a, b):
 # @trace("####")
 @memo
 def fibonacci(n):
-    """Fibonacci doc"""
+    """Fibonacci docstring"""
     return 1 if n <= 1 else fibonacci(n - 1) + fibonacci(n - 2)
 
 
