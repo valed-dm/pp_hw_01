@@ -75,6 +75,7 @@ def memo(func):
     """
     cache = {}
 
+    @wraps(func)
     def helper(*args):
         if args not in cache:
             cache[args] = func(*args)
@@ -130,6 +131,24 @@ if DISABLE:
     do_thrice = disable
 
 
+def trace(str_as_arg):
+    """Trace calls made to function decorated."""
+
+    def actual_decorator(func):
+        @wraps(func)
+        def wrapper(*args, **kwargs):
+            # msg_1 = f"--> {func.__name__}({args})"
+            msg_2 = f"<-- {func.__name__}({args[0]}) == {func(*args)}"
+            # print(str_as_arg + msg_1)
+            print(str_as_arg + msg_2)
+
+            return func(*args, **kwargs)
+
+        return wrapper
+
+    return actual_decorator
+
+
 @measure_performance
 @do_thrice
 @count_calls
@@ -140,6 +159,7 @@ def say_hi():
 
 @count_calls
 @memo
+@trace("####")
 def catalan_rec(n):
     """Catalan number finder"""
     if n <= 1:

@@ -84,7 +84,7 @@ def n_ary(func):
     return wrapper_reduce
 
 
-def trace():
+def trace(str_arg):
     """Trace calls made to function decorated.
 
     @trace("____")
@@ -104,7 +104,20 @@ def trace():
      <-- fib(3) == 3
 
     """
-    return
+
+    def actual_decorator(func):
+        @wraps(func)
+        def wrapper(*args, **kwargs):
+            print(f"{str_arg * fib.calls} --> {func.__name__}({args[0]})")
+            print(
+                f"{str_arg * fib.calls} <-- {func.__name__}({args[0]}) == {func(*args, **kwargs)}"
+            )
+
+            return func(*args, **kwargs)
+
+        return wrapper
+
+    return actual_decorator
 
 
 if DISABLE:
@@ -132,11 +145,11 @@ def multiplication(a, b):
 
 
 @count_calls
-# @trace("####")
-@memo
-def fibonacci(n):
+@trace("_")
+@memo_kwargs
+def fib(n):
     """Fibonacci docstring"""
-    return 1 if n <= 1 else fibonacci(n - 1) + fibonacci(n - 2)
+    return 1 if n <= 1 else fib(n - 1) + fib(n - 2)
 
 
 def main():
@@ -154,10 +167,9 @@ def main():
     print(multiplication.__doc__)
     print("multiplication was called", multiplication.calls, "times")
 
-    print("fibonacci(5) =", fibonacci(5))
-    print("fibonacci(10) =", fibonacci(10))
-    print(fibonacci.__doc__)
-    print(fibonacci.calls, 'fibonacci calls made')
+    print("fib(3) =", fib(3))
+    print(fib.__doc__)
+    print(fib.calls, 'fib calls made')
 
 
 if __name__ == '__main__':
