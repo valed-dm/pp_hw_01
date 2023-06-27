@@ -5,7 +5,10 @@ description = "otus python professional homework_01"
 authors = ["valed-dm <dmvaled@gmail.com>"]
 license = "MIT"
 readme = "README.md"
-packages = [{include = "deco"}]
+packages = [
+    { include = "deco" },
+    { include = "log_analyzer" }
+]
 
 [tool.poetry.dependencies]
 python = "^3.11"
