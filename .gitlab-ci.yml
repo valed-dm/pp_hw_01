@@ -29,19 +29,19 @@ before_script:
   - python3 -m poetry install
 
 stages:
-  - test
   - lint
+  - test
   - deploy
-
-Unit Tests:
-  stage: test
-  script:
-    - python3 -m pytest
 
 Python Code Lint:
   stage: lint
   script:
     - python3 -m pylint $(git ls-files '*.py')
+
+Unit Tests:
+  stage: test
+  script:
+    - python3 -m pytest
 
 Deploy:
   stage: deploy
