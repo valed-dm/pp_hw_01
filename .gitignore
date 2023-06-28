@@ -4,6 +4,10 @@
 *.gz
 *.bz2
 
+# application reports
+log_analyzer/logs
+log_analyzer/reports_default/
+
 # https://github.com/github/gitignore/blob/main/Python.gitignore
 # Byte-compiled / optimized / DLL files
 __pycache__/
