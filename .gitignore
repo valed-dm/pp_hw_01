@@ -1,5 +1,9 @@
 .DS_Store
 
+# archives
+*.gz
+*.bz2
+
 # https://github.com/github/gitignore/blob/main/Python.gitignore
 # Byte-compiled / optimized / DLL files
 __pycache__/
