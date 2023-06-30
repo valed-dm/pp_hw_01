@@ -34,4 +34,5 @@ stages:
 Unit Tests:
   stage: test
   script:
+    - cd log_analyzer
     - python3 -m pytest
