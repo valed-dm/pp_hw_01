@@ -48,7 +48,7 @@ Trigger:
   stage: triggers
   trigger:
     include:
-      - local: ./log_analyzer/.gitlab-ci.yml
+      - local: log_analyzer/.gitlab-ci.yml
 
 Deploy:
   stage: deploy
