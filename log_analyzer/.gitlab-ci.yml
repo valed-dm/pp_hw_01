@@ -24,9 +24,9 @@ cache:
 before_script:
   - python3 --version
   - python3 -m pip install --upgrade pip
-  - python3 -m pip install poetry wheel selenium snapshottest beautifulsoup4 lxml
+  - python3 -m pip install poetry
   - python3 -m poetry config virtualenvs.create false
-  - python3 -m poetry install
+  - python3 -m poetry install --with dev
 
 stages:
   - test
