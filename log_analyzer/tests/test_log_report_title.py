@@ -41,8 +41,8 @@ class TestlogReportTitle(unittest.TestCase):
             r_dir=self.report_dir
         )
         soup_file = open(self.report_abs_path, encoding="utf-8")
-        # soup = BeautifulSoup(soup_file, features="html.parser")
-        soup = BeautifulSoup(soup_file, "lxml")
+        soup = BeautifulSoup(soup_file, features="html.parser")
+        # soup = BeautifulSoup(soup_file, "lxml")
         self.assertEqual(soup.title.get_text(), "rbui log analysis report")
         soup_file.close()
 
