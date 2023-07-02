@@ -5,8 +5,10 @@
 *.bz2
 
 # application reports
-log_analyzer/logs
+l_usr_cfg/
+log_analyzer/logs/
 log_analyzer/reports_default/
+log_analyzer/usr_reports/
 
 # https://github.com/github/gitignore/blob/main/Python.gitignore
 # Byte-compiled / optimized / DLL files
