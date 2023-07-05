@@ -13,11 +13,13 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
-    - uses: nanasess/setup-chromedriver@v2
     - name: Set up Python 3.11
       uses: actions/setup-python@v3
       with:
         python-version: "3.11"
+    - name: Install Google Chrome
+      uses: browser-actions/setup-chrome@v1
+      run: chrome --version
     - name: Install dependencies
       run: |
         python --version
@@ -25,9 +27,6 @@ jobs:
         python -m pip install poetry
         python -m poetry config virtualenvs.create false
         python -m poetry install --with dev
-        export DISPLAY=:99
-        chromedriver --url-base=/wd/hub &
-        sudo Xvfb -ac :99 -screen 0 1280x1024x24 > /dev/null 2>&1 & # optional
 
     - name: Pytest's tests run
       run: |
