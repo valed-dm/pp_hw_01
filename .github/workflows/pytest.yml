@@ -24,7 +24,7 @@ jobs:
         python -m pip install poetry
         python -m poetry config virtualenvs.create false
         python -m poetry install --with dev
-        apt-get install chromium
+        sudo apt-get install chromium
 
     - name: Pytest's tests run
       run: |
