@@ -27,3 +27,5 @@ jobs:
     - name: Pytest's tests run
       run: |
         pytest
+        cd log_analyzer
+        pytest
