@@ -1,7 +1,7 @@
 name: Pylint
 
 on:
-  workflow_dispatch: # Put here!!
+  workflow_dispatch: {}
   push:
     branches:
       - log_analyzer
@@ -22,7 +22,9 @@ jobs:
         run: |
           python --version
           python -m pip install --upgrade pip
-          python -m pip install pylint jinja2 yaml snapshottest selenium bs4
+          python -m pip install poetry pylint
+          python -m poetry config virtualenvs.create false
+          python -m poetry install
       - name: Python Code Lint
         run: |
           pylint $(git ls-files '*.py')
