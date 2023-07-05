@@ -13,6 +13,10 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
+    - uses: abhi1693/setup-browser@v0.3.4
+      with:
+        browser: chrome
+        version: latest
     - name: Set up Python 3.11
       uses: actions/setup-python@v3
       with:
@@ -21,7 +25,7 @@ jobs:
       run: |
         python --version
         python -m pip install --upgrade pip
-        python -m pip install poetry chromedriver-py
+        python -m pip install poetry
         python -m poetry config virtualenvs.create false
         python -m poetry install --with dev
     - name: Pytest's tests run
