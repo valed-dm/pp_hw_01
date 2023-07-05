@@ -22,7 +22,7 @@ jobs:
         run: |
           python --version
           python -m pip install --upgrade pip
-          python -m pip install pylint
+          python -m pip install pylint jinja2 yaml snapshottest selenium bs4
       - name: Python Code Lint
         run: |
           pylint $(git ls-files '*.py')
