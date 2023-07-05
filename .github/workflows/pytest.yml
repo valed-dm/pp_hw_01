@@ -19,10 +19,10 @@ jobs:
         python-version: "3.11"
     - name: Install Google Chrome
       uses: browser-actions/setup-chrome@v1
-      run: chrome --version
     - name: Install dependencies
       run: |
         python --version
+        chrome --version
         python -m pip install --upgrade pip
         python -m pip install poetry
         python -m poetry config virtualenvs.create false
