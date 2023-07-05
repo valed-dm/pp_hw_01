@@ -21,7 +21,7 @@ jobs:
       run: |
         python --version
         python -m pip install --upgrade pip
-        python -m pip install poetry
+        python -m pip install poetry chromedriver-py
         python -m poetry config virtualenvs.create false
         python -m poetry install --with dev
     - name: Pytest's tests run
