@@ -75,7 +75,7 @@ class Parser(ParserData):
             logger.error("log file %s is empty", self.log_file)
             sys.exit()
         elif data_damaged_perc > data_error_perc_acceptable:
-            logger.critical(
+            logger.error(
                 "data broken %0.4f %% exceeds limit %0.4f %%"
                 , data_damaged_perc
                 , data_error_perc_acceptable
