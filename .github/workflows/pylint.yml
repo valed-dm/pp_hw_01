@@ -22,9 +22,9 @@ jobs:
         run: |
           python --version
           python -m pip install --upgrade pip
-          python -m pip install poetry pylint
+          python -m pip install poetry
           python -m poetry config virtualenvs.create false
-          python -m poetry install
+          python -m poetry install --with dev
       - name: Python Code Lint
         run: |
           pylint $(git ls-files '*.py')
