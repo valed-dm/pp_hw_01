@@ -39,7 +39,7 @@ def main():
         ext=log.ext,
         report_size=int(config.report_size)
     )
-    report_data = parser.python_process_log()
+    report_data = parser.log_processor()
     if isinstance(report_data, str):
         logger.info(report_data)
         return

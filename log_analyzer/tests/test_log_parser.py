@@ -34,7 +34,7 @@ class TestLogParser(unittest.TestCase):
     def test_log_parser_gz(self):
         """Checks a report resulted from an input log file with .gz extension processing"""
         with self.assertLogs("analyzer") as captured:
-            report_gz = self.parser_gz.python_process_log()
+            report_gz = self.parser_gz.log_processor()
             self.check_report(report=report_gz)
             self.assertEqual(
                 captured.records[0].getMessage(),
@@ -45,7 +45,7 @@ class TestLogParser(unittest.TestCase):
         """Checks a report resulted from an input log file with .log extension processing"""
 
         with self.assertLogs("analyzer") as captured:
-            report_log = self.parser_log.python_process_log()
+            report_log = self.parser_log.log_processor()
             self.check_report(report=report_log)
             self.assertEqual(
                 captured.records[0].getMessage(),

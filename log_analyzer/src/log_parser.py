@@ -33,39 +33,46 @@ class Parser(ParserData):
             item.time_sum = round(item.time_sum, 3)
             self.report.append(item._asdict())
 
-    def python_process_log(self):
-        """Parse log's urls and it's data"""
+    def log_parser(self):
+        """Parses log's urls and it's data"""
+
+        lines = (line for line in (gzip.open if self.log_ext == "gz" else open)(
+            self.log_file,
+            'rt',
+            encoding='utf-8'
+        )
+                 )
+
+        for line in lines:
+            line_split = line.split(' ')
+            if not line_split[7].startswith("/") and not line_split[7].startswith("http"):
+                self.log_items_broken += 1
+            else:
+                url = str(line_split[7])
+                req_time = float(line.rsplit(" ", 1)[1].rstrip("\n"))
+                self.log_items_qty += 1
+                self.log_req_total_time += req_time
+                if url not in self.grouped_urls:
+                    self.grouped_urls[f"{url}"] = UrlGroupedData(
+                        url=url,
+                        count=1,
+                        time_sum=req_time,
+                        time_max=req_time,
+                        req_times=[req_time]
+                    )
+                else:
+                    self.grouped_urls[f"{url}"].count += 1
+                    self.grouped_urls[f"{url}"].time_sum += req_time
+                    self.grouped_urls[f"{url}"].time_max = max(
+                        self.grouped_urls[f"{url}"].time_max, req_time
+                    )
+                    self.grouped_urls[f"{url}"].req_times.append(req_time)
+
+    def log_processor(self):
+        """Process data and controls result quality"""
 
         logger.info("log file %s is being processed", self.log_file)
-        with (gzip.open if self.log_ext == "gz" else open)(
-                self.log_file,
-                'rt',
-                encoding='utf-8'
-        ) as log:
-            for line in log:
-                line_split = line.split(' ')
-                if not line_split[7].startswith("/") and not line_split[7].startswith("http"):
-                    self.log_items_broken += 1
-                else:
-                    url = str(line_split[7])
-                    req_time = float(line.rsplit(" ", 1)[1].rstrip("\n"))
-                    self.log_items_qty += 1
-                    self.log_req_total_time += req_time
-                    if url not in self.grouped_urls:
-                        self.grouped_urls[f"{url}"] = UrlGroupedData(
-                            url=url,
-                            count=1,
-                            time_sum=req_time,
-                            time_max=req_time,
-                            req_times=[req_time]
-                        )
-                    else:
-                        self.grouped_urls[f"{url}"].count += 1
-                        self.grouped_urls[f"{url}"].time_sum += req_time
-                        self.grouped_urls[f"{url}"].time_max = max(
-                            self.grouped_urls[f"{url}"].time_max, req_time
-                        )
-                        self.grouped_urls[f"{url}"].req_times.append(req_time)
+        self.log_parser()
 
         data_damaged_perc = round(self.log_items_broken / self.log_items_qty * 100, 4)
         data_error_perc_acceptable = 0.1
