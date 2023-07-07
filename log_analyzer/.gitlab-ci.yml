@@ -24,32 +24,15 @@ cache:
 before_script:
   - python3 --version
   - python3 -m pip install --upgrade pip
-  - python3 -m pip install poetry selenium snapshottest
+  - python3 -m pip install poetry
   - python3 -m poetry config virtualenvs.create false
-  - python3 -m poetry install
+  - python3 -m poetry install --with dev
 
 stages:
-  - lint
   - test
-  - triggers
-  - deploy
-
-Python Code Lint:
-  stage: lint
-  script:
-    - python3 -m pylint $(git ls-files '*.py')
 
 Unit Tests:
   stage: test
   script:
+    - cd log_analyzer
     - python3 -m pytest
-
-Trigger:
-  stage: triggers
-  trigger:
-    include:
-      - local: log_analyzer/.gitlab-ci.yml
-
-Deploy:
-  stage: deploy
-  script: echo "Define your deployment script!"

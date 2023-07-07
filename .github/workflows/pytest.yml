@@ -1,0 +1,31 @@
+name: Pytest
+
+on:
+  push:
+    branches: [ "main", "log_analyzer" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Set up Python 3.11
+      uses: actions/setup-python@v3
+      with:
+        python-version: "3.11"
+    - name: Install dependencies
+      run: |
+        python --version
+        python -m pip install --upgrade pip
+        python -m pip install poetry
+        python -m poetry config virtualenvs.create false
+        python -m poetry install --with dev
+    - name: Pytest's tests run
+      run: |
+        pytest
+        cd log_analyzer
+        pytest

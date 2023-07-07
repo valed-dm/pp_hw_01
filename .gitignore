@@ -1,5 +1,15 @@
 .DS_Store
 
+# archives
+*.gz
+*.bz2
+
+# application reports
+l_usr_cfg/
+log_analyzer/logs/
+log_analyzer/reports_default/
+log_analyzer/usr_reports/
+
 # https://github.com/github/gitignore/blob/main/Python.gitignore
 # Byte-compiled / optimized / DLL files
 __pycache__/

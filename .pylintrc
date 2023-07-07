@@ -4,6 +4,11 @@ disable=
     E1121, # Too many positional arguments for function call (too-many-function-args)
     R0801, # Similar lines in 2 files
     R0903, # Too few public methods (1/2) (too-few-public-methods)
+    R1732, # Consider using 'with' for resource-allocating operations (consider-using-with)
 
 [BASIC]
 good-names=a, b, n
+max-args = 10
+
+[FORMAT]
+max-line-length=130
