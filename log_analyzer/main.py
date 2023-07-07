@@ -1,4 +1,7 @@
-"""Log analyzer main file"""
+"""
+Log analyzer main file
+https://mail.python.org/pipermail/python-list/2016-April/857869.html
+"""
 import sys
 
 from log_analyzer.src.helpers import create_arg_parser
