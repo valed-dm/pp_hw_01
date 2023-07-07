@@ -23,30 +23,16 @@ class TestFindLog(unittest.TestCase):
     def test_log_dir_not_exists(self):
         """Testing log analyzer response if log source dir is not found"""
 
-        with self.assertLogs("analyzer") as captured:
-            log_dir = "./tests/t_log_1"
-            try:
-                find_last_log(log_dir)
-            except SystemExit:
-                pass
-            self.assertEqual(
-                captured.records[0].getMessage(),
-                f"log source dir {log_dir} does not exist"
-            )
+        log_dir = "./tests/t_log_1"
+        msg = find_last_log(log_dir)
+        self.assertEqual(msg, "log source dir ./tests/t_log_1 does not exist")
 
     def test_valid_log_files(self):
         """Testing if .log, .gz extensions filter works for input files"""
 
-        with self.assertLogs("analyzer") as captured:
-            log_dir = "./tests/t_log_2"
-            try:
-                find_last_log(log_dir)
-            except SystemExit:
-                pass
-            self.assertEqual(
-                captured.records[0].getMessage(),
-                f"log files (.log, .gz) are not found in {log_dir} directory"
-            )
+        log_dir = "./tests/t_log_2"
+        msg = find_last_log(log_dir)
+        self.assertEqual(msg, "log files (.log, .gz) are not found in ./tests/t_log_2 directory")
 
     def test_find_last_report(self):
         """Testing if the latest report file is found"""

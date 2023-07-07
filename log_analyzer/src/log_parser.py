@@ -2,7 +2,6 @@
 
 import gzip
 import statistics
-import sys
 
 from .logging import Logging
 from .schemas import ParserData, UrlGroupedData
@@ -69,18 +68,14 @@ class Parser(ParserData):
                         self.grouped_urls[f"{url}"].req_times.append(req_time)
 
         data_damaged_perc = round(self.log_items_broken / self.log_items_qty * 100, 4)
-        data_error_perc_acceptable = 0.1
+        data_error_perc_acceptable = 0.001
 
         if self.log_items_qty == 0:
-            logger.error("log file %s is empty", self.log_file)
-            sys.exit()
-        elif data_damaged_perc > data_error_perc_acceptable:
-            logger.error(
-                "data broken %0.4f %% exceeds limit %0.4f %%"
-                , data_damaged_perc
-                , data_error_perc_acceptable
-            )
-            sys.exit()
+            msg = f"log file {self.log_file} is empty"
+            return msg
+        if data_damaged_perc > data_error_perc_acceptable:
+            msg = f"data broken {data_damaged_perc}% exceeds limit {data_error_perc_acceptable}%"
+            return msg
 
         res_filtered = {k: v for k, v in self.grouped_urls.items() if v.count > 0}
         self.report_raw = sorted(
@@ -88,6 +83,7 @@ class Parser(ParserData):
             key=lambda item: item.time_sum,
             reverse=True
         )[:self.report_size]
+
         self.report_creator()
         logger.info(
             "log file %s contains %0.4f %% of data broken"
