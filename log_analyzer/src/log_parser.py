@@ -68,7 +68,7 @@ class Parser(ParserData):
                         self.grouped_urls[f"{url}"].req_times.append(req_time)
 
         data_damaged_perc = round(self.log_items_broken / self.log_items_qty * 100, 4)
-        data_error_perc_acceptable = 0.001
+        data_error_perc_acceptable = 0.1
 
         if self.log_items_qty == 0:
             msg = f"log file {self.log_file} is empty"
