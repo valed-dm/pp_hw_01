@@ -36,14 +36,15 @@ class Parser(ParserData):
     def log_parser(self):
         """Parses log's urls and it's data"""
 
-        lines = (line for line in (gzip.open if self.log_ext == "gz" else open)(
+        # generator expression
+        lines_generator = (line for line in (gzip.open if self.log_ext == "gz" else open)(
             self.log_file,
             'rt',
             encoding='utf-8'
         )
                  )
 
-        for line in lines:
+        for line in lines_generator:
             line_split = line.split(' ')
             if not line_split[7].startswith("/") and not line_split[7].startswith("http"):
                 self.log_items_broken += 1
