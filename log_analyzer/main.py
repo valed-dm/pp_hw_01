@@ -4,13 +4,13 @@ https://mail.python.org/pipermail/python-list/2016-April/857869.html
 """
 import sys
 
-from log_analyzer.src.helpers import create_arg_parser
-from log_analyzer.src.helpers import log_cfg
-from log_analyzer.src.helpers import log_path
-from log_analyzer.src.log_find import find_log
-from log_analyzer.src.log_parser import Parser
-from log_analyzer.src.log_report import log_report
-from log_analyzer.src.logging import Logging
+from src.helpers import create_arg_parser
+from src.helpers import log_cfg
+from src.helpers import log_path
+from src.log_find import find_log
+from src.log_parser import Parser
+from src.log_report import log_report
+from src.logging import Logging
 
 # !/usr/bin/env python
 # -*- coding: utf-8 -*-
